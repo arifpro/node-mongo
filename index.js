@@ -50,8 +50,9 @@ app.get('/fruits/banana', (req, res) => {
     res.send({fruit:'banana', quantity:1000, price:10000})
 })
 
-app.get('/users/:id', (req, res) => {
+app.get('/product/:id', (req, res) => {
     const id = req.params.id
+    // find({id:id})
     // console.log(req.query.sort);
     const name = users[id]
     // console.log(req.params);
