@@ -90,6 +90,7 @@ app.get('/product/:id', (req, res) => {
       const collection = client.db("redOnion").collection("foods");
       // const collection = client.db("onlineStore").collection("products");
       collection.find({id:id}).toArray((err, documents) => {
+        console.log(documents)
         if (err) {
           console.log(err);
           res.status(500).send({ message: err });
