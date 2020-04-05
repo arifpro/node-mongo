@@ -40,7 +40,7 @@ app.get("/products", (req, res) => {
           console.log(err);
           res.status(500).send({ message: err });
         } else {
-          res.send(documents);
+          res.send(documents[0]);
         }
       });
       client.close();
@@ -75,8 +75,8 @@ app.get('/fruits/banana', (req, res) => {
     res.send({fruit:'banana', quantity:1000, price:10000})
 })
 
-app.get('/product/:key', (req, res) => {
-    const key = req.params.key
+app.get('/product/:id', (req, res) => {
+    const id = req.params.id
     // find({id:id})
     // console.log(req.query.sort);
     // console.log(req.params);
@@ -88,12 +88,13 @@ app.get('/product/:key', (req, res) => {
       // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
       const collection = client.db("redOnion").collection("foods");
       // const collection = client.db("onlineStore").collection("products");
-      collection.find({key}).limit(5).toArray((err, documents) => {
+      collection.find({id:id}).toArray((err, documents) => {
         if (err) {
           console.log(err);
           res.status(500).send({ message: err });
         } else {
-          res.send(documents[0]);
+          console.log(documents)
+          res.send(documents);
         }
       });
       client.close();
