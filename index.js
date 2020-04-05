@@ -35,7 +35,7 @@ app.get("/products", (req, res) => {
       // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
       const collection = client.db("redOnion").collection("foods");
       // const collection = client.db("onlineStore").collection("products");
-      collection.find().limit(5).toArray((err, documents) => {
+      collection.find().toArray((err, documents) => {
         if (err) {
           console.log(err);
           res.status(500).send({ message: err });
@@ -55,7 +55,7 @@ app.get("/allFeatures", (req, res) => {
   client = new MongoClient(uri, { useNewUrlParser: true });
   client.connect(err => {
     const collection = client.db("redOnion").collection("features");
-    collection.find().limit(5).toArray((err, documents) => {
+    collection.find().toArray((err, documents) => {
       if (err) {
         console.log(err);
         res.status(500).send({ message: err });
