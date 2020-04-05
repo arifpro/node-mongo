@@ -89,14 +89,14 @@ app.get('/product/:id', (req, res) => {
       // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
       const collection = client.db("redOnion").collection("foods");
       // const collection = client.db("onlineStore").collection("products");
-      collection.find({id}).toArray((err, documents) => {
+      collection.find().toArray((err, documents) => {
         console.log(documents)
         if (err) {
           console.log(err);
           res.status(500).send({ message: err });
         } else {
           console.log(documents)
-          res.send(documents[0]);
+          res.send(documents);
         }
       });
       client.close();
