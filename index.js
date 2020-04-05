@@ -120,7 +120,7 @@ app.get('/food/:id', (req, res) => {
         } else {
           // const dataSend = documents[id - 1]
           // console.log(dataSend)
-          res.send(documents);
+          res.send(documents[0]);
         }
       });
       client.close();
