@@ -33,7 +33,8 @@ app.get("/products", (req, res) => {
     client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
       // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
-      const collection = client.db("onlineStore").collection("products");
+      const collection = client.db("redOnion").collection("foods");
+      // const collection = client.db("onlineStore").collection("products");
       collection.find().limit(5).toArray((err, documents) => {
         if (err) {
           console.log(err);
@@ -46,6 +47,29 @@ app.get("/products", (req, res) => {
     });
     
 });
+
+
+
+
+app.get("/allFeatures", (req, res) => {
+  client = new MongoClient(uri, { useNewUrlParser: true });
+  client.connect(err => {
+    const collection = client.db("redOnion").collection("features");
+    collection.find().limit(5).toArray((err, documents) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send({ message: err });
+      } else {
+        res.send(documents);
+      }
+    });
+    client.close();
+  });
+
+});
+
+
+
 
 app.get('/fruits/banana', (req, res) => {
     res.send({fruit:'banana', quantity:1000, price:10000})
@@ -62,7 +86,8 @@ app.get('/product/:key', (req, res) => {
     client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
       // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
-      const collection = client.db("onlineStore").collection("products");
+      const collection = client.db("redOnion").collection("foods");
+      // const collection = client.db("onlineStore").collection("products");
       collection.find({key}).limit(5).toArray((err, documents) => {
         if (err) {
           console.log(err);
@@ -82,7 +107,8 @@ app.post('/getProductsByKey', (req, res) => {
   const productKeys = req.body
   client = new MongoClient(uri, { useNewUrlParser: true });
   client.connect(err => {
-    const collection = client.db("onlineStore").collection("products");
+    const collection = client.db("redOnion").collection("foods");
+    // const collection = client.db("onlineStore").collection("products");
     collection.find({ key: {$in: productKeys} }).limit(5).toArray((err, documents) => {
       if (err) {
         console.log(err);
@@ -106,7 +132,8 @@ app.post('/placeOrder', (req, res) => {
 
   client = new MongoClient(uri, { useNewUrlParser: true });
   client.connect(err => {
-    const collection = client.db("onlineStore").collection("orders");
+    const collection = client.db("redOnion").collection("foods");
+    // const collection = client.db("onlineStore").collection("orders");
     collection.insertOne(orderDetails, (err, result) => {
       if (err) {
         console.log(err)
@@ -127,7 +154,8 @@ app.post('/addProduct', (req, res) => {
     const product = req.body
 
     client.connect(err => {
-    const collection = client.db("onlineStore").collection("products");
+      const collection = client.db("redOnion").collection("foods");
+    // const collection = client.db("onlineStore").collection("products");
     collection.insertOne(product, (err, result) => {
         // console.log("successfully inserted", result);
         if (err) {
@@ -152,7 +180,8 @@ app.post('/addProducts', (req, res) => {
   // console.log(product);
 
   client.connect(err => {
-    const collection = client.db("onlineStore").collection("products");
+    const collection = client.db("redOnion").collection("features");
+    // const collection = client.db("onlineStore").collection("products");
     collection.insert(product, (err, result) => {
       // console.log("successfully inserted", result);
       if (err) {
@@ -167,7 +196,7 @@ app.post('/addProducts', (req, res) => {
   });
 })
 
-const port = process.env.PORT || 4200
+const port = process.env.PORT || 4300
 app.listen(port, () => console.log(`Listening to port ${port}`))
 
 
