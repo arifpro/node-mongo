@@ -108,18 +108,14 @@ app.get('/product/:id', (req, res) => {
 
 app.get('/food/:id', (req, res) => {
     const id = Number(req.params.id)
-    console.log(id)
     client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
       const collection = client.db("redOnion").collection("foods");
       collection.find({id}).toArray((err, documents) => {
-        // console.log(documents)
         if (err) {
           console.log(err);
           res.status(500).send({ message: err });
         } else {
-          // const dataSend = documents[id - 1]
-          // console.log(dataSend)
           res.send(documents[0]);
         }
       });
