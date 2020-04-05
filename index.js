@@ -96,7 +96,7 @@ app.get('/product/:id', (req, res) => {
           res.status(500).send({ message: err });
         } else {
           console.log(documents)
-          res.send(documents);
+          res.send(documents[0]);
         }
       });
       client.close();
