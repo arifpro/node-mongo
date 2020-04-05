@@ -40,7 +40,7 @@ app.get("/products", (req, res) => {
           console.log(err);
           res.status(500).send({ message: err });
         } else {
-          res.send(documents[0]);
+          res.send(documents);
         }
       });
       client.close();
@@ -77,6 +77,7 @@ app.get('/fruits/banana', (req, res) => {
 
 app.get('/product/:id', (req, res) => {
     const id = req.params.id
+    console.log(id)
     // find({id:id})
     // console.log(req.query.sort);
     // console.log(req.params);
