@@ -75,28 +75,52 @@ app.get('/fruits/banana', (req, res) => {
     res.send({fruit:'banana', quantity:1000, price:10000})
 })
 
+
 app.get('/product/:id', (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  // find({id:id})
+  // console.log(req.query.sort);
+  // console.log(req.params);
+
+  // const name = users[id]
+  // res.send({id, name})
+  client = new MongoClient(uri, { useNewUrlParser: true });
+  client.connect(err => {
+    // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
+    const collection = client.db("redOnion").collection("foods");
+    // const collection = client.db("onlineStore").collection("products");
+    collection.find().toArray((err, documents) => {
+      console.log(documents)
+      if (err) {
+        console.log(err);
+        res.status(500).send({ message: err });
+      } else {
+        const dataSend = documents[id - 1]
+        console.log(dataSend)
+        res.send(dataSend);
+      }
+    });
+    client.close();
+  });
+})
+
+
+app.get('/food/:id', (req, res) => {
     const id = req.params.id
     console.log(id)
-    // find({id:id})
-    // console.log(req.query.sort);
-    // console.log(req.params);
-
-    // const name = users[id]
-    // res.send({id, name})
     client = new MongoClient(uri, { useNewUrlParser: true });
     client.connect(err => {
-      // { name: 'mobile', stock: { $gt: 20 } } find er modde dile filter korbe
       const collection = client.db("redOnion").collection("foods");
-      // const collection = client.db("onlineStore").collection("products");
-      collection.find({id}).toArray((err, documents) => {
+      collection.find().toArray((err, documents) => {
         console.log(documents)
         if (err) {
           console.log(err);
           res.status(500).send({ message: err });
         } else {
-          console.log(documents)
-          res.send(documents[id-1]);
+          const dataSend = documents[id - 1]
+          console.log(dataSend)
+          res.send(dataSend);
         }
       });
       client.close();
