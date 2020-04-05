@@ -155,7 +155,7 @@ app.post('/placeOrder', (req, res) => {
 
   client = new MongoClient(uri, { useNewUrlParser: true });
   client.connect(err => {
-    const collection = client.db("redOnion").collection("foods");
+    const collection = client.db("redOnion").collection("orders");
     // const collection = client.db("onlineStore").collection("orders");
     collection.insertOne(orderDetails, (err, result) => {
       if (err) {
